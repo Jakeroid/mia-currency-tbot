@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Telegram PBOT</title>
+    {% if stylesUrl %}
+        <link rel="stylesheet" href="{{ stylesUrl }}">
+    {% endif %}
+</head>
+<body>
+    <div class="log-container">
+        <p class="log-item"></p>
+    </div>
+    {% if jqueryUrl %}
+        <script src="{{ jqueryUrl }}"></script>
+    {% endif %}
+    {% if scriptsUrl %}
+        <script src="{{ scriptsUrl }}"></script>
+    {% endif %}
+</body>
+</html>
