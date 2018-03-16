@@ -50,7 +50,6 @@ def handleWebHook(request):
         if chat != None:
             username = chat.get('username')
             chat_id = chat.get('id')
-            print(chat_id)
             text = message.get('text')
             log_str = '%s: %s' % (username, text)
             answer_message = 'USD currency is: %s' % parseUsdCurrency()

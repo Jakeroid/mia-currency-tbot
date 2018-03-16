@@ -4,7 +4,8 @@ $(document).ready(function() {
 
     var reloadData = function() {
         var countItems = logContainer.find('.log-item').length;
-        $.get('/stats/' + countItems, function(data) {
+        var id = countItems - 1;
+        $.get('/stats/' + id, function(data) {
             var answer = $.parseJSON(data);
             answer.forEach(logText => {
                 var newLogItem = logItem.clone();
