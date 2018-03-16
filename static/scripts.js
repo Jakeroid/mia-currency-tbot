@@ -2,8 +2,8 @@ $(document).ready(function() {
     var logContainer = $('.log-container');
     var logItem = logContainer.find('.log-item');
     setInterval(function() {
-        console.log('ss');
-        $.get('/stats', function(answer) {
+        $.get('/stats', function(data) {
+            var answer = $.parseJSON(data);
             answer.forEach(logText => {
                 var newLogItem = logItem.clone();
                 newLogItem.text(logText);

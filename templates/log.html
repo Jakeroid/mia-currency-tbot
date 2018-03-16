@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Telegram PBOT</title>
-    {% if stylesUrl %}
+    <!-- {% if stylesUrl %}
         <link rel="stylesheet" href="{{ stylesUrl }}">
-    {% endif %}
+    {% endif %} -->
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <div class="log-container">
@@ -19,5 +20,7 @@
     {% if scriptsUrl %}
         <script src="{{ scriptsUrl }}"></script>
     {% endif %}
+    <script src="/jquery-3.3.1.min.js"></script>
+    <script src="/scripts.js"></script>
 </body>
 </html>
