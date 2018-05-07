@@ -3,21 +3,21 @@ import json
 import urllib.request
 import requests
 import sys
-from config import getConfig
+from config import get_config
 
 # prepare app object
 app = Flask(__name__, static_folder='static', static_url_path='')
 
 # main variables
-config = getConfig()
-telegramApiUrl = "https://api.telegram.org/bot%s/" % config.get('telegramBotApiToken')
-hookUrlPath = '/hook/%s' % config.get('telegramBotApiToken')
-hookAbsoluteUrl = 'https://mia-currency-tbot.jakeroid.com%s' % hookUrlPath
+config = get_config()
+telegram_api_url = "https://api.telegram.org/bot%s/" % config.get('telegram_bot_api_token')
+hook_url_path = '/hook/%s' % config.get('telegram_bot_api_token')
+hook_absolute_url = 'https://mia-currency-tbot.jakeroid.com%s' % hook_url_path
 logData = [];
 
 # set web hook function
-def setWebHook():
-    result_url = '%ssetWebHook?url=%s' % (telegramApiUrl, hookAbsoluteUrl)
+def set_web_hook():
+    result_url = '%ssetWebHook?url=%s' % (telegram_api_url, hook_absolute_url)
     resource = urllib.request.urlopen(result_url)
     content =  resource.read().decode('utf-8')
     answer = json.loads(content)
@@ -25,7 +25,7 @@ def setWebHook():
     return flag
 
 # function for parse currency
-def parseUsdCurrency():
+def parse_urd_current():
     result_url = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'
     resource = urllib.request.urlopen(result_url)
     content =  resource.read().decode('utf-8')
@@ -36,12 +36,12 @@ def parseUsdCurrency():
     return formatted_result
 
 # function for send back message
-def sendMessage(chat_id, text):
-    result_url = telegramApiUrl + 'sendMessage'
+def send_message(chat_id, text):
+    result_url = telegram_api_url + 'sendMessage'
     response = requests.post(result_url, json={'chat_id': chat_id, 'text': text})
 
 # function to handle web hook
-def handleWebHook(request):
+def handle_web_hook(request):
     answer = request.json
     message = answer.get('message')
     log_str = 'Some request have come, but not recognized.'
@@ -52,9 +52,9 @@ def handleWebHook(request):
             chat_id = chat.get('id')
             text = message.get('text')
             log_str = '%s: %s' % (username, text)
-            answer_message = 'USD currency is: %s' % parseUsdCurrency()
-            sendMessage(chat_id, answer_message)
-    logData.append(log_str)
+            answer_message = 'USD currency is: %s' % parse_urd_current()
+            send_message(chat_id, answer_message)
+    # logData.append(log_str)
 
 # route for main page
 @app.route('/')
@@ -65,20 +65,20 @@ def log():
 @app.route('/stats/<id>')
 def stats(id):
     offset = int(id)
-    result = logData[offset:]
-    if result == None:
-        result = []
+    # result = logData[offset:]
+    # if result == None:
+    result = []
     return json.dumps(result)
 
 #rotue for telegram web hook
-@app.route(hookUrlPath, methods=['POST'])
+@app.route(hook_url_path, methods=['POST'])
 def hook():
     if request.method == 'POST':
-        handleWebHook(request)
+        handle_web_hook(request)
     return '';
 
 # try to set webhook
-if setWebHook() == False:
+if set_web_hook() == False:
     print('Error with setting up telegram wep hook.')
     sys.exit()
 
