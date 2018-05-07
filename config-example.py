@@ -1,7 +1,7 @@
-def getConfig():
+def get_config():
 
     result = {
-        'telegramBotApiToken': ''
+        'telegram_bot_api_token': ''
     }
 
     return result

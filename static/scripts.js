@@ -19,5 +19,5 @@ $(document).ready(function() {
 
     setInterval(function() {
         reloadData();
-    }, 1000);
+    }, 5000);
 })
