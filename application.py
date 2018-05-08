@@ -13,7 +13,7 @@ config = get_config()
 telegram_api_url = "https://api.telegram.org/bot%s/" % config.get('telegram_bot_api_token')
 hook_url_path = '/hook/%s' % config.get('telegram_bot_api_token')
 hook_absolute_url = 'https://mia-currency-tbot.jakeroid.com%s' % hook_url_path
-logData = [];
+log_data = [];
 
 # set web hook function
 def set_web_hook():
@@ -54,7 +54,7 @@ def handle_web_hook(request):
             log_str = '%s: %s' % (username, text)
             answer_message = 'USD currency is: %s' % parse_urd_current()
             send_message(chat_id, answer_message)
-    # logData.append(log_str)
+    log_data.append(log_str)
 
 # route for main page
 @app.route('/')
@@ -65,9 +65,9 @@ def log():
 @app.route('/stats/<id>')
 def stats(id):
     offset = int(id)
-    # result = logData[offset:]
-    # if result == None:
-    result = []
+    result = log_data[offset:]
+    if result == None:
+        result = []
     return json.dumps(result)
 
 #rotue for telegram web hook
